@@ -35,3 +35,20 @@ export async function getMembers(): Promise<Member[]> {
 
   return data as Member[]
 }
+
+export async function addMember(
+  member: Omit<Member, 'id' | 'created_at'>,
+): Promise<Member> {
+  const cookieStore = await cookies()
+  const supabase = await createClient(cookieStore)
+
+  const { data, error } = await supabase
+    .from('members')
+    .insert(member)
+    .select()
+    .single()
+
+  if (error) throw new Error(error.message)
+
+  return data as Member
+}

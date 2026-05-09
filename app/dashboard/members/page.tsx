@@ -1,7 +1,14 @@
-import React from 'react'
+import { getMembers } from '@/lib/actions/members'
+import { MembersTable } from '../components'
 
-const Members = () => {
-  return <div>Members</div>
+export default async function Members() {
+  const members = await getMembers()
+
+  return (
+    <main>
+      <div className="page-header"></div>
+
+      <MembersTable members={members} />
+    </main>
+  )
 }
-
-export default Members
